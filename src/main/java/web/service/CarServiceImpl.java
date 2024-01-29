@@ -2,7 +2,6 @@ package web.service;
 
 import web.model.Car;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +21,6 @@ public class CarServiceImpl implements CarService {
     }
     @Override
     public List<Car> getSpecifiedNumberOfCars(int number) {
-        return cars.stream().limit(number < 0 ? 0 : number).collect(Collectors.toList());
+        return cars.stream().limit(Math.max(number, 0)).collect(Collectors.toList());
     }
 }
