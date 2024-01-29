@@ -3,25 +3,25 @@ package web.service;
 import web.model.Car;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class CarServiceImpl implements CarService {
-    @Override
-    public List<Car> getSpecifiedNumberOfCars(int number) {
-        List<Car> cars = new ArrayList<>();
+    private final List<Car> cars = Arrays.asList(initCarsList());
+
+    private Car[] initCarsList() {
+        Car[] carsArray = new Car[5];
         String[] carModels = {"Audi TT", "BMW 8 Sport Coupe", "Ford Cougar", "Fiat 124 Sport Coupe", "Opel Gran Turismo Coupé Concept"};
         Random random = new Random();
-        if (number <= 0) {
-            return new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            carsArray[i] = new Car(carModels[i], random.nextInt(999999 - 100000) + 100000);
         }
-        if (number > 5) {
-            number = 5;
-        }
-        Car.resetNextId();
-        for (int i = 0; i < number; i++) {
-            cars.add(new Car(carModels[i], random.nextInt(999999 - 100000) + 100000));
-        }
-        return cars;
+        return carsArray;
+    }
+    @Override
+    public List<Car> getSpecifiedNumberOfCars(int number) {
+        return cars.stream().limit(number < 0 ? 0 : number).collect(Collectors.toList());
     }
 }
