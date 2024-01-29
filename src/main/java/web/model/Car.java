@@ -13,10 +13,6 @@ public class Car {
         Car.nextId++;
     }
 
-    public static void resetNextId() {
-        nextId = 1L;
-    }
-
     public Long getId() {
         return id;
     }
